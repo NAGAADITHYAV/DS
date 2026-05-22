@@ -24,11 +24,16 @@ class LinkedList:
         while parser:
             parser = parser.next
             n += 1
-        print(f"List has a total of {n} nodes")
+        # print(f"List has a total of {n} nodes")
         return n
 
     def search(self, value):
-        pass
+        parser = self.head
+        while(parser):
+            if parser.value == value:
+                return True
+            parser = parser.next
+        return False
 
     def insert_in_beginning(self, data):
         node = Node(data)
@@ -69,10 +74,22 @@ class LinkedList:
         pass
 
     def delete_first_node(self):
-        pass
+        if self.head:
+            self.head = self.head.next
+        # self.display_list()
 
     def delete_last_node(self):
-        pass
+        if not self.head:
+            return
+        if self.head and not self.head.next:
+            self.head = None
+        parser = self.head
+        while(parser):
+            if parser.next and not parser.next.next:
+                parser.next = parser.next.next
+                break
+            parser = parser.next
+        # self.display_list()
 
     def reverse_list(self):
         pass
@@ -93,5 +110,11 @@ ll = LinkedList(Node(1))
 ll.insert_at_end(2)
 ll.count_nodes()
 ll.insert_in_beginning(0)
+ll.insert_in_beginning(-1)
+ll.insert_at_end(3)
 ll.count_nodes()
+ll.delete_first_node()
+ll.delete_last_node()
+print(ll.search(2))
+print(ll.search(4))
 # ll.display_list()
