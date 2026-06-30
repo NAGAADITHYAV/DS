@@ -92,7 +92,17 @@ class LinkedList:
         # self.display_list()
 
     def reverse_list(self):
-        pass
+        if not self.head or not self.head.next:
+            return
+        
+        parser = self.head
+        prev = None
+        while(parser):
+            next_node = parser.next
+            parser.next = prev
+            prev = parser
+            parser = next_node
+        self.head = prev
 
     def bubble_sort_byExdata(self):
         pass
@@ -117,4 +127,8 @@ ll.delete_first_node()
 ll.delete_last_node()
 print(ll.search(2))
 print(ll.search(4))
+ll.reverse_list()
+ll.display_list()
+ll.reverse_list()
+ll.display_list()
 # ll.display_list()
