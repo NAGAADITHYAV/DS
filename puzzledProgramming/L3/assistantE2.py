@@ -42,9 +42,9 @@ class Assistant:
             raise ValueError("Exactly five unique cards are required")
 
         same_suit_pair = self._find_same_suit_pair(cards)
-        first_card, hidden_card, distance = self._choose_cards(same_suit_pair)
+        first_card, _hidden_card, distance = self._choose_cards(same_suit_pair)
         remaining_cards = [card for card in cards if card not in same_suit_pair]
-        encoded_cards = self._encode_distance(remaining_cards, distance)
+        encoded_cards = self.deck.encode_distance(remaining_cards, distance)
 
         return [first_card, *encoded_cards]
 
@@ -84,19 +84,3 @@ class Assistant:
             return lower_card, higher_card, distance
 
         return higher_card, lower_card, 13 - distance
-
-    @staticmethod
-    def _encode_distance(cards: list[Card], distance: int) -> list[Card]:
-        low, middle, high = sorted(
-            cards,
-            key=lambda card: (card.rank_value, card.suit),
-        )
-        patterns = {
-            1: [low, middle, high],
-            2: [low, high, middle],
-            3: [middle, low, high],
-            4: [middle, high, low],
-            5: [high, low, middle],
-            6: [high, middle, low],
-        }
-        return patterns[distance]

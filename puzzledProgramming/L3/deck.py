@@ -41,3 +41,37 @@ class Deck:
             return self._cards_by_code[(rank.upper(), suit.upper())]
         except KeyError as error:
             raise ValueError(f"Invalid card: {rank} {suit}") from error
+
+    @staticmethod
+    def encode_distance(cards: list[Card], distance: int) -> list[Card]:
+        """Encode a distance from 1 to 6 using the order of three cards."""
+        low, middle, high = sorted(
+            cards,
+            key=lambda card: (card.rank_value, card.suit),
+        )
+        patterns = {
+            1: [low, middle, high],
+            2: [low, high, middle],
+            3: [middle, low, high],
+            4: [middle, high, low],
+            5: [high, low, middle],
+            6: [high, middle, low],
+        }
+        return patterns[distance]
+
+    @staticmethod
+    def decode_distance(cards: list[Card]) -> int:
+        """Decode a three-card order back into a distance from 1 to 6."""
+        low, middle, high = sorted(
+            cards,
+            key=lambda card: (card.rank_value, card.suit),
+        )
+        patterns = {
+            (low, middle, high): 1,
+            (low, high, middle): 2,
+            (middle, low, high): 3,
+            (middle, high, low): 4,
+            (high, low, middle): 5,
+            (high, middle, low): 6,
+        }
+        return patterns[tuple(cards)]
