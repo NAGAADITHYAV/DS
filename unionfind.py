@@ -7,7 +7,7 @@ class UnionFind:
         if i != self.parent[i]:
             self.parent[i] = self.find(self.parent[i])
 
-        return self.parent[i]    
+        return self.parent[i]  
 
     def union(self, x, y):
         rootx = self.find(x)
